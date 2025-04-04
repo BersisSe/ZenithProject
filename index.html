@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday!</title>
+  <link rel="icon" href="penguen-semih.ico" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script>
+    function birthdayApp() {
+      return {
+        titleVisible: false,
+        messageVisible: false,
+        showClickMessage: false,
+        giftOpen: false,
+        
+        init() {
+          // Trigger initial animations
+          setTimeout(() => {
+            this.titleVisible = true;
+            
+            setTimeout(() => {
+              this.messageVisible = true;
+              this.showClickMessage = true;
+              
+              // Initial confetti blast
+              this.fireConfetti();
+            }, 1000);
+          }, 800);
+          
+          // Add click listener for confetti
+          document.addEventListener('click', () => {
+            this.fireConfetti();
+          });
+        },
+        
+        fireConfetti() {    
+          confetti({
+            particleCount: 200,
+            spread: 100
+          });
+        },
+        
+        openGift() {
+          this.giftOpen = true;
+          this.fireConfetti();
+        },
+        
+        closeGift() {
+          this.giftOpen = false;
+        }
+      };
+    }
+    </script>
+    
+  <div class="container" x-data="birthdayApp()" x-init="init()">
+    <h1 :class="titleVisible ? 'visible' : ''">Doğum Günün Kutlu Olsun Semih!!</h1>
+    <div class="birthday-cake">🎂</div>
+    <div class="message" :class="messageVisible ? 'visible' : ''">Umarım Bu Gün Hayatında Yaşadığın en mutlu günlerden biri olur</div>
+    <div class="click-message" x-show="showClickMessage">Daha Fazla Konfeti İçin Ekrana Tıkla Hediyenide Aç!</div>
+   
+    <div class="gift-box" @click="openGift">Aç > 🎁</div>
+    
+    <div class="surprise" :class="giftOpen ? 'active' : ''">
+      <h2>Doğum İçin Diceklerim</h2>
+      <p>Bu özel günde umarım tüm dileklerin ve isteklerin yerine gelir, iyiki doğmuşsun ve iyiki arkadaşımızsın 💗💗</p>
+      <button class="close-button" @click="closeGift">Teşekkürler Seni Seviyoruz</button>
+    </div>
+    <p>Bersis👑, Rümeysa🍧 ve azcık Alp🥓 Tarafından Sevgi ile Yapıldı❤</p>
+  </div>
+
+</body>
+</html>
